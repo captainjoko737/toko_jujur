@@ -31,7 +31,7 @@ class BarangController extends Controller {
         	}
         }
 
-		return response()->json(['status'=> true, 'message'=> 'Berhasil login!', 'data' => [$result]]);
+		return response()->json(['status'=> true, 'message'=> 'Success', 'data' => [$result]]);
 
     }
 
