@@ -25,13 +25,13 @@ class AntrianController extends Controller
         $date = \Carbon\Carbon::now();
 
         $kedatangan = $date->format('H:i:s');
-        $masaAktif 	= $date->addHours(6)->format('Y-m-d H:i:s');
+        $masaAktif 	= $date->addMinutes(15)->format('Y-m-d H:i:s');
      
         $param = [
         	'id_user' 		=> request()->id_user,
 			'kedatangan'	=> $kedatangan, 	
 			'masa_aktif'	=> $masaAktif, 	
-			'active'		=> 1, 	
+			'active'		=> 1,
 			'tanggal'		=> \Carbon\Carbon::now()->format('Y-m-d')
         ];
 

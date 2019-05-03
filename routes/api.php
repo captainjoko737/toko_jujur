@@ -23,3 +23,9 @@ Route::post('register', 'api\auth\AuthController@register');
 Route::post('antrian', 'api\antrian\AntrianController@getNomorAntrian');
 Route::get('saldo', 'api\saldo\SaldoController@getSaldo');
 Route::get('barang', 'api\barang\BarangController@getBarang');
+
+Route::post('keranjang', 'api\keranjang\KeranjangController@postKeranjang');
+Route::get('keranjang', 'api\keranjang\KeranjangController@getKeranjang');
+
+Route::post('transaksi', 'api\transaksi\TransaksiController@postTransaksi');
+Route::get('transaksi', 'api\transaksi\TransaksiController@getHistoryTransaksi');

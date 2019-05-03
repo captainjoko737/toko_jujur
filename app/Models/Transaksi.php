@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Antrian extends Model
+class Transaksi extends Model
 {
-    protected $table = 'antrian';
+    protected $table = 'transaksi';
     protected $primaryKey = 'id';
 
     /**
@@ -15,14 +15,16 @@ class Antrian extends Model
      * @var array
      */
     protected $fillable = [ 	
-		'id_user', 	
-		'kedatangan', 	
-		'masa_aktif', 	
-		'active', 	
-		'tanggal', 	
+		'id_user',     
+        'id_barang',   
+        'create_date',     
+        'total',   
+        'active',  
+        'quantity',    
+        'no_antrian', 
     ];
 
-    protected $dates = ['masa_aktif'];
+    protected $dates = ['create_date'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -32,4 +34,9 @@ class Antrian extends Model
     protected $hidden = [
         'created_at', 'updated_at', 'id',
     ];
+
+    public function barang()
+    {
+         return $this->belongsTo('App\Models\Barang', 'id_barang');
+    }
 }
