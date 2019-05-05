@@ -13,6 +13,7 @@ use App\Models\Antrian;
 class KeranjangController extends Controller
 {
     
+    // SAVE DATA TO KERANJANG
     public function postKeranjang() {
     	
     	$validator = Validator::make(request()->all(), [
@@ -32,6 +33,9 @@ class KeranjangController extends Controller
         $masaAktifAntrian = $antrian->masa_aktif;
 
         if($masaAktifAntrian->lt(Carbon::now())){
+            // DELETE DATA KERANJANG 
+            $delete = Keranjang::where('no_antrian', request()->no_antrian)->delete();
+
 		    return response()->json(['status'=> false, 'message'=> 'Masa Aktif Nomor Antrian Telah Habis', 'data' => []]);
 		}
 
@@ -51,6 +55,7 @@ class KeranjangController extends Controller
         }
     }
 
+    // GET LIST KERANJANG
     public function getKeranjang() {
     	
     	$validator = Validator::make(request()->all(), [
@@ -67,23 +72,24 @@ class KeranjangController extends Controller
         ->where('no_antrian', request()->no_antrian)
         ->get();
 
-        $totalPrice = 0;
-
+        $total = 0;
+        $items = 0;
         foreach ($response as $key => $value) {
-        	
-        	$totalPrice += (Int)$value->barang->harga;	
+            $response[$key]['total'] = $value->barang->harga * $value->quantity;
+            $total += (Int)$response[$key]['total'];
+            $items += $value->quantity;
         }
 
         $result = [
-        	'total_price' => $totalPrice,
-        	'total_item' => count($response),
+        	'total_price' => $total,
+        	'total_item' => $items,
         	'barang'	=> $response
         ];
 
-        return $result;
+        // return $result;
 
-        if ($save) {
-        	return response()->json(['status'=> true, 'message'=> 'Success', 'data' => [$save]]);
+        if ($result) {
+        	return response()->json(['status'=> true, 'message'=> 'Success', 'data' => [$result]]);
         }else{
         	return response()->json(['status'=> false, 'message'=> 'Something went wrong!', 'data' => []]);
         }

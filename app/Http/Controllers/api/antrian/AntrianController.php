@@ -46,4 +46,15 @@ class AntrianController extends Controller
 
     }
 
+    public function updateNoAntrian($no_antrian) {
+
+        $result = Antrian::where('id', $no_antrian)->first();
+
+        $result->active = 'N';
+        $result->save();
+
+        return $result->active;
+    }   
+    
+
 }

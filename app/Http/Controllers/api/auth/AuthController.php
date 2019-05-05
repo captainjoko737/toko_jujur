@@ -11,6 +11,8 @@ use Hash;
 
 class AuthController extends Controller {
     
+
+    // LOGIN
     public function login() {
 
     	$validator = Validator::make(request()->all(), [
@@ -36,6 +38,7 @@ class AuthController extends Controller {
         
     }
 
+    // REGISTER
     public function register() {
 
     	$validator = Validator::make(request()->all(), [
@@ -55,6 +58,7 @@ class AuthController extends Controller {
         $request = request()->all();
         $request['password'] = bcrypt(request()->password);
         $request['access'] = 0;
+        $request['active'] = 'N';
 
         $save = User::create($request);
 
@@ -62,6 +66,32 @@ class AuthController extends Controller {
         	return response()->json(['status'=> true, 'message'=> 'Success', 'data' => [$save]]);
         }else{
         	return response()->json(['status'=> false, 'message'=> 'Something went wrong!', 'data' => []]);
+        }
+
+    }
+
+    // VERIFIKASI AKUN
+    public function verifikasi() {
+
+        $validator = Validator::make(request()->all(), [
+            'id_user'    => 'required',
+            'rfid'       => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status'=> false, 'message'=> $validator->messages()->first(), 'data' => []]);
+        }
+
+        $result = User::where('id', request()->id_user)->first();
+
+        $result->rfid = request()->rfid;
+        $result->active = 'Y';
+        $save = $result->save();
+
+        if ($save) {
+            return response()->json(['status'=> true, 'message'=> 'Success', 'data' => [$result]]);
+        }else{
+            return response()->json(['status'=> false, 'message'=> 'Something went wrong!', 'data' => []]);
         }
 
     }

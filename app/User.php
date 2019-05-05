@@ -23,6 +23,7 @@ class User extends Authenticatable
         'jenis_kelamin',   
         'active',  
         'access', 
+        'rfid',
     ];
 
     /**

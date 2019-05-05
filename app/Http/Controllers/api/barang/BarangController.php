@@ -11,6 +11,7 @@ use App\Models\Barang;
 
 class BarangController extends Controller {
     
+    // GET DATA BARANG WHERE CODE
     public function getBarang() {
 
     	$validator = Validator::make(request()->all(), [
