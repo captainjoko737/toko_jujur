@@ -12,6 +12,7 @@ use App\Models\Transaksi;
 use App\Models\Keranjang;
 use App\Models\Saldo;
 use App\Models\Barang;
+use App\Models\Voucher;
 use App\Http\Controllers\api\saldo\SaldoController;
 use App\Http\Controllers\api\antrian\AntrianController;
 
@@ -35,14 +36,30 @@ class TransaksiController extends Controller
                         ->where('id_user', request()->id_user)
                         ->orderBy('id', 'DESC')
                         ->get();
-
+// return $listTransaksi;
         $resultTransaksi = [];
 
         foreach ($listTransaksi as $key => $value) {
             $noAntrian = $value->no_antrian;
 
+            // GET VOUCHER
+
+            $voucher = 0;
+            $responseVoucher = Voucher::join('voucher', 'voucher.id', '=', 'transaksi_voucher.id_voucher')
+                ->where('transaksi_voucher.id_user', request()->id_user)
+                ->where('transaksi_voucher.no_antrian', $value->no_antrian)
+                ->first();
+
+            if ($responseVoucher) {
+                $voucher = $responseVoucher->value;
+            }
+
             $dataTransaksi = [];
+            $totalPrice = 0;
+
             foreach ($listTransaksi as $keys => $values) {
+
+                // $totalPrice += $values->total * $values->quantity;
                 if ($values->no_antrian == $noAntrian) {
                     array_push($dataTransaksi, $values);
                 }
@@ -50,6 +67,9 @@ class TransaksiController extends Controller
 
             $data = [
                 'no_antrian' => $noAntrian,
+                'total_price' => $totalPrice,
+                'total_payment' => $totalPrice - $voucher,
+                'voucher'       => $voucher,
                 'list'       => $dataTransaksi
             ];
 
@@ -126,6 +146,35 @@ class TransaksiController extends Controller
             return response()->json(['status'=> false, 'message'=> $validator->messages()->first(), 'data' => []]);
         }
 
+        // CEK NOMOR ANTRIAN
+
+        $antrian = Antrian::where('id', request()->no_antrian)->first();
+        $masaBerlakuAntrian = $antrian->masa_aktif;
+        $masaAktifAntrian = $antrian->active;
+
+        if($masaBerlakuAntrian->lt(Carbon::now())){
+            // DELETE DATA KERANJANG 
+            $delete = Keranjang::where('no_antrian', request()->no_antrian)->delete();
+
+            return response()->json(['status'=> false, 'message'=> 'Masa Berlaku Nomor Antrian Telah Habis', 'data' => []]);
+        }
+
+        if($masaAktifAntrian == 'N'){
+            // DELETE DATA KERANJANG 
+            $delete = Keranjang::where('no_antrian', request()->no_antrian)->delete();
+
+            return response()->json(['status'=> false, 'message'=> 'Masa Aktif Nomor Antrian Telah Habis', 'data' => []]);
+        }
+
+        // GET VOUCHER
+
+        $voucher = 0;
+        $responseVoucher = Voucher::join('voucher', 'voucher.id', '=', 'transaksi_voucher.id_voucher')->where('transaksi_voucher.id_user', request()->id_user)->where('transaksi_voucher.no_antrian', null)->first();
+
+        if ($responseVoucher) {
+            $voucher = $responseVoucher->value;
+        }
+
         // GET SALDO
 
         $saldo = (new SaldoController)->checkSaldo(request()->id_user);
@@ -151,7 +200,7 @@ class TransaksiController extends Controller
         }
 
         // CHECK IF SALDO IS ENOUGH
-        if ((Int)$saldo->saldo < $total) {
+        if ((Int)$saldo->saldo < $total - $voucher) {
             return response()->json(['status'=> false, 'message'=> 'Saldo tidak mencukupi untuk melanjutkan transaksi', 'data' => []]);
         }
 
@@ -182,7 +231,16 @@ class TransaksiController extends Controller
 
         // POTONG SALDO
 
-        $cutSaldo = (new SaldoController)->cutSaldo(request()->id_user, $total);
+        $cutSaldo = (new SaldoController)->cutSaldo(request()->id_user, $total - $voucher);
+
+        // DISABLE VOUCHER
+
+        $resultVoucher = Voucher::where('id_user', request()->id_user)->where('no_antrian', null)->first();
+
+        if ($resultVoucher) {
+            $resultVoucher['no_antrian'] = request()->no_antrian;
+            $resultVoucher->save();
+        }
 
         // UPDATE NO ANTRIAN
 
@@ -191,6 +249,8 @@ class TransaksiController extends Controller
         $totalTransaksi = [
             'saldo'          => $cutSaldo,
             'total_price'    => $total,
+            'total_payment'  => $total - $voucher,
+            'voucher'        => $voucher,
             'total_items'    => $items,
             'list_transaksi' => $listKeranjang,
         ];

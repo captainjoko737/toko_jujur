@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Hash;
+use App\Models\Voucher;
 
 class AuthController extends Controller {
     
@@ -87,6 +88,16 @@ class AuthController extends Controller {
         $result->rfid = request()->rfid;
         $result->active = 'Y';
         $save = $result->save();
+
+        // ADD VOUCHER
+
+        $voucher = [
+            'id_user'    => request()->id_user,
+            'id_voucher' => 'registrasi',
+            'no_antrian' => null
+        ];
+
+        Voucher::create($voucher);
 
         if ($save) {
             return response()->json(['status'=> true, 'message'=> 'Success', 'data' => [$result]]);
