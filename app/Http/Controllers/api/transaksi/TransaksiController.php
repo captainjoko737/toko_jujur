@@ -128,10 +128,10 @@ class TransaksiController extends Controller
 
         // GET SALDO
 
-        $saldo = (Int)(new SaldoController)->checkSaldo(request()->id_user)->saldo;
+        $saldo = (new SaldoController)->checkSaldo(request()->id_user);
 
         // CHECK IF SALDO IS EXIST
-        if (!$saldo) {
+        if (!isset($saldo->saldo)) {
             return response()->json(['status'=> false, 'message'=> 'Data Saldo Tidak ditemukan, silahkan untuk mengisi saldo terlebih dulu.', 'data' => []]);
         }
 
@@ -151,7 +151,7 @@ class TransaksiController extends Controller
         }
 
         // CHECK IF SALDO IS ENOUGH
-        if ($saldo < $total) {
+        if ((Int)$saldo->saldo < $total) {
             return response()->json(['status'=> false, 'message'=> 'Saldo tidak mencukupi untuk melanjutkan transaksi', 'data' => []]);
         }
 
