@@ -15,9 +15,9 @@
                         <!--End Logo icon -->
                         <!-- Logo text --><span>
                          <!-- dark Logo text -->
-                         <img src="{{ url('/public/assets/images/logo.png') }}" alt="homepage" width="100%" class="dark-logo" />
+                         <img src="{{ url('/public/assets/images/logo.png') }}" alt="Toko Jujur" width="100%" class="dark-logo" />
                          <!-- Light Logo text -->    
-                         <img src="{{ url('/public/assets/images/logo.png') }}" class="light-logo" alt="homepage" /></span> </a>
+                         <img src="{{ url('/public/assets/images/logo.png') }}" class="light-logo" alt="Toko Jujur" /></span> </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -53,14 +53,14 @@
                         <!-- Profile -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ url('/public/assets/images/users/default_avatar.png') }}" alt="user" class="profile-pic" /></a>
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ url('/assets/images/users/default_avatar.png') }}" alt="user" class="profile-pic" /></a>
                             <div class="dropdown-menu dropdown-menu-right animated flipInY">
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img"><img src="{{ url('/public/assets/images/users/default_avatar.png') }}" alt="suser"></div>
+                                            <div class="u-img"><img src="{{ url('assets/images/users/default_avatar.png') }}" alt="suser"></div>
                                             <div class="u-text">
-                                                <h4>{{ Auth::user()->name }}</h4>
+                                                <h4>{{ Auth::user()->nama }}</h4>
                                                 <p class="text-muted">{{ Auth::user()->username }}</p></div>
                                         </div>
                                     </li>

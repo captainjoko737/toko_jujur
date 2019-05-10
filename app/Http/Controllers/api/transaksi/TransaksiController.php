@@ -40,47 +40,6 @@ class TransaksiController extends Controller
         foreach ($listTransaksi as $key => $value) {
             $listTransaksi[$key]['total'] = $value->barang->harga * $value->quantity;
         }
-// return $listTransaksi;
-        // $resultTransaksi = [];
-
-        // foreach ($listTransaksi as $key => $value) {
-        //     $noAntrian = $value->no_antrian;
-
-        //     // GET VOUCHER
-
-        //     $voucher = 0;
-        //     $responseVoucher = Voucher::join('voucher', 'voucher.id', '=', 'transaksi_voucher.id_voucher')
-        //         ->where('transaksi_voucher.id_user', request()->id_user)
-        //         ->where('transaksi_voucher.no_antrian', $value->no_antrian)
-        //         ->first();
-
-        //     if ($responseVoucher) {
-        //         $voucher = $responseVoucher->value;
-        //     }
-
-        //     $dataTransaksi = [];
-        //     $totalPrice = 0;
-
-        //     foreach ($listTransaksi as $keys => $values) {
-
-        //         // $totalPrice += $values->total * $values->quantity;
-        //         if ($values->no_antrian == $noAntrian) {
-        //             array_push($dataTransaksi, $values);
-        //         }
-        //     }
-
-        //     $data = [
-        //         'no_antrian' => $noAntrian,
-        //         'total_price' => $totalPrice,
-        //         'total_payment' => $totalPrice - $voucher,
-        //         'voucher'       => $voucher,
-        //         'list'       => $dataTransaksi
-        //     ];
-
-        //     array_push($resultTransaksi, $data);
-        // }
-
-        // return $resultTransaksi;
 
         if ($listTransaksi) {
             return response()->json(['status'=> true, 'message'=> 'Success', 'data' => $listTransaksi]);

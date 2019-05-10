@@ -32,14 +32,15 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-<link href="{{ url('assets/plugins/c3-master/c3.min.css') }}" rel="stylesheet">
-    <!--Toaster Popup message CSS -->
-<link href="{{ url('assets/plugins/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
-<link href="{{ url('css/pages/dashboard1.css') }}" rel="stylesheet">
-<link href="{{ url('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
+    <link href="{{ url('assets/plugins/c3-master/c3.min.css') }}" rel="stylesheet">
+        <!--Toaster Popup message CSS -->
+    <link href="{{ url('assets/plugins/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
+    <link href="{{ url('css/pages/dashboard1.css') }}" rel="stylesheet">
+    <link href="{{ url('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
 
-<link href="{{ url('assets/plugins/morrisjs/morris.css') }}" rel="stylesheet">
-<!-- <link href="{{ url('https://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css') }}" rel="stylesheet"> -->
+    <link href="{{ url('assets/plugins/morrisjs/morris.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url('assets/plugins/dropify/dist/css/dropify.min.css') }}">
+    <!-- <link href="{{ url('https://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css') }}" rel="stylesheet"> -->
 
 
 
@@ -53,7 +54,7 @@
     <div class="preloader">
         <div class="loader">
             <div class="loader__figure"></div>
-            <p class="loader__label"><strong>FKIP UNINUS</strong></p>
+            <p class="loader__label"><strong>Toko Jujur</strong></p>
         </div>
     </div>
 
@@ -196,7 +197,8 @@
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'excel',
-            ]
+            ],
+            order: [ [0, 'asc'] ]
         });
 
         

@@ -15,7 +15,7 @@
                 <form class="form-horizontal form-material" id="loginform" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
 
-                    <h3 class="box-title m-b-20">Sign In</h3>
+                    <h3 class="box-title m-b-20 text-center"><strong>Toko Jujur Admin</strong></h3>
                     
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <div class="col-xs-12">
@@ -37,13 +37,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <div class="checkbox checkbox-info pull-left p-t-0">
-                                <input id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
-                                <label for="checkbox-signup"> Remember me </label>
-                            </div> <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot password?</a> </div>
-                    </div>
+                    
                     <div class="form-group text-center">
                         <div class="col-xs-12 p-b-20">
                             <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Log In</button>

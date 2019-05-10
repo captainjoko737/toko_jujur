@@ -26,6 +26,10 @@ class User extends Authenticatable
         'rfid',
     ];
 
+    protected $dates = ['created_at'];
+
+    protected $rememberTokenName = false;
+
     /**
      * The attributes that should be hidden for arrays.
      *
