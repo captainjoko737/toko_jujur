@@ -34,14 +34,14 @@ class KeranjangController extends Controller
         $masaBerlakuAntrian = $antrian->masa_aktif;
         $masaAktifAntrian = $antrian->active;
 
-        if($masaBerlakuAntrian->lt(Carbon::now())){
-            // DELETE DATA KERANJANG 
-            $delete = Keranjang::where('no_antrian', request()->no_antrian)->delete();
+  //       if($masaBerlakuAntrian->lt(Carbon::now())){
+  //           // DELETE DATA KERANJANG 
+  //           $delete = Keranjang::where('no_antrian', request()->no_antrian)->delete();
 
-		    return response()->json(['status'=> false, 'message'=> 'Masa Berlaku Nomor Antrian Telah Habis', 'data' => []]);
-		}
+		//     return response()->json(['status'=> false, 'message'=> 'Masa Berlaku Nomor Antrian Telah Habis', 'data' => []]);
+		// }
 
-        if($masaAktifAntrian == 'N'){
+        if($masaAktifAntrian == 'N' && $masaBerlakuAntrian->lt(Carbon::now())){
             // DELETE DATA KERANJANG 
             $delete = Keranjang::where('no_antrian', request()->no_antrian)->delete();
 
@@ -110,6 +110,35 @@ class KeranjangController extends Controller
         	return response()->json(['status'=> true, 'message'=> 'Success', 'data' => [$result]]);
         }else{
         	return response()->json(['status'=> false, 'message'=> 'Something went wrong!', 'data' => []]);
+        }
+    }
+
+    // GET LIST KERANJANG
+    public function deleteKeranjang() {
+        
+        $validator = Validator::make(request()->all(), [
+            'id_user'       => 'required',
+            'no_antrian'    => 'required',
+            'id_keranjang'  => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status'=> false, 'message'=> $validator->messages()->first(), 'data' => []]);
+        }
+
+        // return request()->all();
+
+        $response = Keranjang::where('id_user', request()->id_user)
+        ->where('no_antrian', request()->no_antrian)
+        ->where('id', request()->id_keranjang)
+        ->first();
+
+        $result = $response->delete();
+
+        if ($result) {
+            return response()->json(['status'=> true, 'message'=> 'Success', 'data' => []]);
+        }else{
+            return response()->json(['status'=> false, 'message'=> 'Something went wrong!', 'data' => []]);
         }
     }
 }

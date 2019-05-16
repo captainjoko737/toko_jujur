@@ -27,6 +27,7 @@ Route::get('barang', 'api\barang\BarangController@getBarang');
 
 Route::post('keranjang', 'api\keranjang\KeranjangController@postKeranjang');
 Route::get('keranjang', 'api\keranjang\KeranjangController@getKeranjang');
+Route::delete('keranjang', 'api\keranjang\KeranjangController@deleteKeranjang');
 
 Route::post('transaksi', 'api\transaksi\TransaksiController@postTransaksi');
 Route::get('transaksi', 'api\transaksi\TransaksiController@getHistoryTransaksi');
