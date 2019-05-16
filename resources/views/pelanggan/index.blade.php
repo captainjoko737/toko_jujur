@@ -71,7 +71,7 @@
                                         <td>{{ $value['created_at'] }}</td>
                                         <td>
                                             <a href="{{ route('pelanggan.saldo', ['id' => $value->id_user]) }}" data-toggle="tooltip" data-original-title="Topup Saldo" > <i class="fa fa-money m-r-10"></i> </a>
-                                            <a href="{{ route('pelanggan.edit', ['id' => $value->id]) }}" data-toggle="tooltip" data-original-title="Edit" > <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                            <a href="{{ route('pelanggan.edit', ['id' => $value->id_user]) }}" data-toggle="tooltip" data-original-title="Edit" > <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
                                             <a onclick="drop({{$value->id}})" data-toggle="tooltip" data-original-title="Delete" > <i class="fa fa-trash-o text-danger m-r-10"></i> </a>
                                         </td>
                                     </tr>

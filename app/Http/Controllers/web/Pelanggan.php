@@ -123,12 +123,10 @@ class Pelanggan extends Controller
 
     public function postSaldo(request $request) {
 
-        // return $request->all();
-
         $saldo = MSaldo::where('id_user', $request->id)->first();
 
         if ($saldo) {
-            $saldo['saldo'] = $request->totalSaldo + $request->saldo;
+            $saldo['saldo'] += (Int)$request->totalSaldo + $request->saldo;
             $save = $saldo->save();
         }else{
             $param = [
