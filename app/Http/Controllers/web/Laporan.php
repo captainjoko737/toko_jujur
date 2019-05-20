@@ -24,9 +24,8 @@ class Laporan extends Controller
         $data['title'] = 'Laporan Penjualan';
 
         $result = Transaksi::join('users', 'users.id', '=', 'transaksi.id_user')
-                        ->join('barang', 'barang.id', '=', 'transaksi.id_barang')
                         ->orderBy('users.created_at', 'DESC')
-                        ->select('users.nama as nama_pembeli', 'transaksi.*', 'barang.*')
+                        ->select('users.nama as nama_pembeli', 'transaksi.*')
                         ->get();
 
         $data['result'] = $result;

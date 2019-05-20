@@ -32,67 +32,30 @@ class TransaksiController extends Controller
 
         // GET LIST KERANJANG
 
-        $listTransaksi = Transaksi::with('barang')
-                        ->where('id_user', request()->id_user)
+        $listTransaksi = Transaksi::where('id_user', request()->id_user)
                         ->orderBy('id', 'DESC')
                         ->get();
 
         foreach ($listTransaksi as $key => $value) {
-            $listTransaksi[$key]['total'] = $value->barang->harga * $value->quantity;
+
+            $arr = [
+                'nama' => $value->nama_barang,
+                'kode' => $value->kode_barang,
+                'photo' => $value->photo,
+                'created_at' => $value->created_at->format('Y-m-d H:i:s')
+            ];
+            $listTransaksi[$key]['barang'] = $arr;
+        }
+
+        // return $listTransaksi;
+        foreach ($listTransaksi as $key => $value) {
+            $listTransaksi[$key]['total'] = $value->total * $value->quantity;
         }
 
         if ($listTransaksi) {
             return response()->json(['status'=> true, 'message'=> 'Success', 'data' => $listTransaksi]);
         }else{
             return response()->json(['status'=> false, 'message'=> 'Something went wrong!', 'data' => []]);
-        }
-
-    }
-
-    // GET DETAIL DATA HISTORY TRANSAKSI
-    public function getHistoryDetailTransaksi() {
-
-        $validator = Validator::make(request()->all(), [
-            'id_user'     => 'required',
-            'no_antrian'  => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['status'=> false, 'message'=> $validator->messages()->first(), 'data' => []]);
-        }
-
-        // GET LIST KERANJANG
-
-        $listTransaksi = Transaksi::with('barang')
-                        ->where('id_user', request()->id_user)
-                        ->where('no_antrian', request()->no_antrian)
-                        ->orderBy('id', 'DESC')
-                        ->get();
-
-        $resultTransaksi = [];
-
-        foreach ($listTransaksi as $key => $value) {
-            $noAntrian = $value->no_antrian;
-
-            $dataTransaksi = [];
-            foreach ($listTransaksi as $keys => $values) {
-                if ($values->no_antrian == $noAntrian) {
-                    array_push($dataTransaksi, $values);
-                }
-            }
-
-            $data = [
-                'no_antrian' => $noAntrian,
-                'list'       => $dataTransaksi
-            ];
-
-            array_push($resultTransaksi, $data);
-        }
-
-        if ($resultTransaksi) {
-            return response()->json(['status'=> true, 'message'=> 'Success', 'data' => $resultTransaksi]);
-        }else{
-            return response()->json(['status'=> false, 'message'=> 'History detail transaksi tidak ditemukan', 'data' => []]);
         }
 
     }
@@ -171,7 +134,9 @@ class TransaksiController extends Controller
         foreach ($listKeranjang as $key => $value) {
             $param = [
                 'id_user'       => request()->id_user,   
-                'id_barang'     => $value->id_barang,
+                'nama_barang'   => $value->barang->nama,
+                'kode_barang'   => $value->barang->kode,
+                'photo'         => $value->barang->photo,
                 'create_date'   => Carbon::now(),
                 'total'         => $value->barang->harga,
                 'active'        => 1,

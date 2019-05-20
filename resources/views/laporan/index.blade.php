@@ -57,11 +57,11 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $value['nama_pembeli'] }}</td>
-                                        <td>{{ $value['kode'] }}</td>
-                                        <td>{{ $value['nama'] }}</td>
-                                        <td>Rp. {{ number_format($value['harga'], 2) }}</td>
+                                        <td>{{ $value['kode_barang'] }}</td>
+                                        <td>{{ $value['nama_barang'] }}</td>
+                                        <td>Rp. {{ number_format($value['total'], 2) }}</td>
                                         <td class="text-center">{{ $value['quantity'] }}</td>
-                                        <td>Rp. {{ number_format($value['harga'] * $value['quantity'], 2) }}</td>
+                                        <td>Rp. {{ number_format($value['total'] * $value['quantity'], 2) }}</td>
                                         <td>{{ $value['created_at'] }}</td>
                                         <td class="text-center">{{ $value['no_antrian'] }}</td>
                                     </tr>

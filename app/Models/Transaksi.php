@@ -16,7 +16,9 @@ class Transaksi extends Model
      */
     protected $fillable = [ 	
 		'id_user',     
-        'id_barang',   
+        'kode_barang', 
+        'nama_barang',
+        'photo',
         'create_date',     
         'total',   
         'active',  
@@ -35,8 +37,4 @@ class Transaksi extends Model
         'created_at', 'updated_at',
     ];
 
-    public function barang()
-    {
-         return $this->belongsTo('App\Models\Barang', 'id_barang');
-    }
 }
