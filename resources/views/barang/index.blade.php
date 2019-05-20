@@ -113,7 +113,7 @@
                             // console.log(data);
                             location.reload();
                         }, error: function (data) {
-                            alert(data.responseText);
+                            alert('Barang tidak bisa dihapus apabila masih ada di keranjang pembeli.');
                         }
 
                     });

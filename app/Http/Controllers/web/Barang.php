@@ -162,6 +162,10 @@ class Barang extends Controller
         $result = MBarang::find($request->id);
         $result->delete();
 
+        if (!$result) {
+            
+        }
+
         session()->flash('status', 'Barang Berhasil dihapus!');
         return response()->json(['success'=>"Barang Deleted successfully.", 'tr'=>'tr_'.$request->id]);
 
