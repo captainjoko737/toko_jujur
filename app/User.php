@@ -24,6 +24,7 @@ class User extends Authenticatable
         'active',  
         'access', 
         'rfid',
+        'nik',
     ];
 
     protected $dates = ['created_at'];

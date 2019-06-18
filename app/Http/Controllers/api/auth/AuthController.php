@@ -49,6 +49,7 @@ class AuthController extends Controller {
 			'nama'					=> 'required',
 			'alamat'				=> 'required',
 			'jenis_kelamin'			=> 'required',
+            'nik'                   => 'required',
         ]);
 
         if ($validator->fails()) {
