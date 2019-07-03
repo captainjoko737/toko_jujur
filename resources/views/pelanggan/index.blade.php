@@ -35,7 +35,7 @@
                                     <th>ALAMAT</th>
                                     <th>JENIS KELAMIN</th>
                                     <th>AKTIF</th>
-                                    <th>RFID</th>
+                                    <!-- <th>RFID</th> -->
                                     <th>SALDO</th>
                                     <th>TGL REGISTRASI</th>
                                     <th>AKSI</th>
@@ -50,7 +50,7 @@
                                     <th>ALAMAT</th>
                                     <th>JENIS KELAMIN</th>
                                     <th>AKTIF</th>
-                                    <th>RFID</th>
+                                    <!-- <th>RFID</th> -->
                                     <th>SALDO</th>
                                     <th>TGL REGISTRASI</th>
                                     <th>AKSI</th>
@@ -66,7 +66,7 @@
                                         <td>{{ $value['alamat'] }}</td>
                                         <td>{{ $value['jenis_kelamin'] }}</td>
                                         <td>{{ $value['active'] }}</td>
-                                        <td>{{ $value['rfid'] }}</td>
+                                        <!-- <td>{{ $value['rfid'] }}</td> -->
                                         <td>Rp. {{ number_format($value['saldo'], 2) }}</td>
                                         <td>{{ $value['created_at'] }}</td>
                                         <td>

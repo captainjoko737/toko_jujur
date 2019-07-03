@@ -58,13 +58,6 @@
 
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <h5>RFID</h5>
-                                        <input type="text" id="rfid" name="rfid" class="form-control" style="width: 30%; height:56px;" required placeholder="RFID Pelanggan" value="{{ $result->rfid }}">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
                                         <h5>Jenis Kelamin</h5>
                                         <select class="select2 form-control custom-select" name="jenis_kelamin" style="width: 30%; height:56px;" required>
                                             <option>P</option>
@@ -77,8 +70,8 @@
                                     <div class="form-group">
                                         <h5>AKTIF</h5>
                                         <select class="select2 form-control custom-select" name="active" style="width: 30%; height:56px;" required>
-                                            <option>Y</option>
-                                            <option>T</option>
+                                            <option {{ $result->active == 'Y' ? 'selected' : '' }} >Y</option>
+                                            <option {{ $result->active == 'N' ? 'selected' : '' }} >N</option>
                                         </select>
                                     </div>
                                 </div>  

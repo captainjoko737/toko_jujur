@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Support\Facades\Validator;
 use Hash;
 use App\Models\Voucher;
+use App\Models\Saldo;
 
 class AuthController extends Controller {
     
@@ -60,9 +61,28 @@ class AuthController extends Controller {
         $request = request()->all();
         $request['password'] = bcrypt(request()->password);
         $request['access'] = 0;
-        $request['active'] = 'N';
+        $request['active'] = 'Y';
 
         $save = User::create($request);
+
+        // ADD VOUCHER
+
+        $voucher = [
+            'id_user'    => $save->id,
+            'id_voucher' => 'registrasi',
+            'no_antrian' => null
+        ];
+
+        Voucher::create($voucher);
+
+        // ADD SALDO 0
+
+        $saldo = [
+            'id_user'   => $save->id,
+            'saldo'     => 0
+        ];
+
+        Saldo::create($saldo);
 
         if ($save) {
         	return response()->json(['status'=> true, 'message'=> 'Success', 'data' => [$save]]);
@@ -89,16 +109,6 @@ class AuthController extends Controller {
         $result->rfid = request()->rfid;
         $result->active = 'Y';
         $save = $result->save();
-
-        // ADD VOUCHER
-
-        $voucher = [
-            'id_user'    => request()->id_user,
-            'id_voucher' => 'registrasi',
-            'no_antrian' => null
-        ];
-
-        Voucher::create($voucher);
 
         if ($save) {
             return response()->json(['status'=> true, 'message'=> 'Success', 'data' => [$result]]);
